@@ -24,7 +24,7 @@ class 拼运:
 
 with open('当量.txt') as f:
     text = f.read()
-for 行 in findall(r'^([a-z]+)\t([\d.]+)$', text, flags=M):
+for 行 in findall(r'^([a-z]+)\t([\d\.]+)$', text, flags=M):
     当量[行[0]] = float(行[1])
 
 def 分割(text: str) -> tuple[str, str]:
@@ -43,15 +43,20 @@ def 应用拼运(text: str) -> list[str]:
     声 = 声.replace('sh', 'u')
     拼韵: list[str] = 拼运(type='xform', fr='iong', to='s').apply([韵])
     拼韵  = 拼运(type='xform', fr='iang', to='d').apply(拼韵)
-    拼韵: list[str] = 拼运(type='xform', fr='iang', to='d').apply(拼韵)
+    拼韵: list[str] = 拼运(type='xform', fr='uang', to='d').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='uang', to='d').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='uan', to='ao').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='uan', to='r').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='van', to='r').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='ing', to='iang').apply(拼韵)
+    拼韵  = 拼运(type='xform', fr='iang', to='d').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ing', to='y').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='uai', to='y').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ong', to='s').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='eng', to='ai').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='eng', to='g').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ang', to='h').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='iao', to='in').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='iao', to='c').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ian', to='m').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='iu', to='q').apply(拼韵)
@@ -65,13 +70,19 @@ def 应用拼运(text: str) -> list[str]:
     拼韵 = 拼运(type='xform', fr='an', to='j').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ao', to='k').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ai', to='l').apply(拼韵)
+    拼韵 = 拼运(type='xform', fr='ei', to='in').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ei', to='z').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ie', to='x').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='ui', to='o').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ui', to='v').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='ou', to='in').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ou', to='b').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='in', to='n').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ng', to='g').apply(拼韵)
     拼韵 = 拼运(type='derive', fr='i', to='d').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='e', to='ian').apply(拼韵)
+    拼韵 = 拼运(type='xform', fr='ian', to='m').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='u', to='e').apply(拼韵)
     if 声 == '':
         if len(韵) == 2:
             return [韵]
@@ -85,9 +96,10 @@ with open('freq.txt') as f:
     text = f.read()
 for 行 in findall(r'^([a-z]+)\t(\d+)$', text, flags=M):
     行: tuple[str, str]
-    (行)
-    结果 = [(x, int(行[1]), 当量[x]) for x in 应用拼运(行[0])]
-    print(行, 结果)
+    try:
+        结果 = [(x, int(行[1]), 当量[x]) for x in 应用拼运(行[0])]
+    except:
+        print(行)
     m = min([x[2] for x in 结果])
     列表.append(next((x for x in 结果 if x[2] == m)))
 
