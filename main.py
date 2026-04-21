@@ -58,6 +58,7 @@ def 应用拼运(text: str) -> list[str]:
     拼韵 = 拼运(type='xform', fr='ang', to='h').apply(拼韵)
     拼韵 = 拼运(type='derive', fr='iao', to='in').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='iao', to='c').apply(拼韵)
+    拼韵 = 拼运(type='derive', fr='ian', to='ei').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='ian', to='m').apply(拼韵)
     拼韵 = 拼运(type='derive', fr='iu', to='o').apply(拼韵)
     拼韵 = 拼运(type='xform', fr='iu', to='q').apply(拼韵)
